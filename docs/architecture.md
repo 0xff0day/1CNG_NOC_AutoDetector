@@ -1,5 +1,7 @@
 # Architecture Documentation
 
+> 📋 **See [Complete Features Reference](FEATURES.md) for detailed list of all 50+ implemented modules**
+
 ## System Layers Explained
 
 ### 1. Presentation Layer
@@ -363,3 +365,14 @@ Audit Logger (with integrity hash)
 2. Implement `send(notification)` method
 3. Register in alerting configuration
 4. Add routing rule support
+
+---
+
+## 👥 Credits & Community
+
+Created by: **Lily Yang**, **0xff**, **Community**, **Black Roots**, **CifSec**  
+Sponsored by: **1Cloud Next Generation (1CNG)**
+
+🌐 [1cng.cloud](https://1cng.cloud) | 💬 [Telegram](https://t.me/noc_community) | 🐦 [@1CNG_NOC](https://twitter.com/1CNG_NOC)
+
+See [CREDITS.md](CREDITS.md) for full details.

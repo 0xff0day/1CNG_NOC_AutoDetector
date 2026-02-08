@@ -1,5 +1,7 @@
 # Installation Guide
 
+> 📋 **See [Complete Features Reference](FEATURES.md) for detailed list of all 50+ modules**
+
 ## System Requirements
 
 ### Minimum Requirements
@@ -512,3 +514,14 @@ After installation:
 5. **Schedule reports**: Setup cron for daily/weekly reports
 
 See [Configuration Reference](configuration.md) for detailed settings.
+
+---
+
+## 👥 Credits & Community
+
+Created by: **Lily Yang**, **0xff**, **Community**, **Black Roots**, **CifSec**  
+Sponsored by: **1Cloud Next Generation (1CNG)**
+
+🌐 [1cng.cloud](https://1cng.cloud) | 💬 [Telegram](https://t.me/noc_community) | 🐦 [@1CNG_NOC](https://twitter.com/1CNG_NOC)
+
+See [CREDITS.md](CREDITS.md) for full details.

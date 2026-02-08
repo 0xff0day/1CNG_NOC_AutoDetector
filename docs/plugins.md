@@ -1,5 +1,7 @@
 # Plugin Development Guide
 
+> 📋 **See [Complete Features Reference](FEATURES.md) for all 50+ available modules**
+
 Create custom plugins for new device types.
 
 ## Plugin Structure
@@ -647,3 +649,14 @@ See: `autodetector/plugins/builtin/vmware_esxi/`
 ---
 
 For questions or issues, see [Troubleshooting](troubleshooting.md).
+
+---
+
+## 👥 Credits & Community
+
+Created by: **Lily Yang**, **0xff**, **Community**, **Black Roots**, **CifSec**  
+Sponsored by: **1Cloud Next Generation (1CNG)**
+
+🌐 [1cng.cloud](https://1cng.cloud) | 💬 [Telegram](https://t.me/noc_community) | 🐦 [@1CNG_NOC](https://twitter.com/1CNG_NOC)
+
+See [CREDITS.md](CREDITS.md) for full details.

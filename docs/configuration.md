@@ -1,5 +1,7 @@
 # Configuration Reference
 
+> 📋 **See [Complete Features Reference](FEATURES.md) for all 50+ modules and their configuration options**
+
 Complete reference for `config/config.yaml`.
 
 ## Table of Contents
@@ -750,3 +752,14 @@ Common validation errors:
 - Credential reference not defined
 - Invalid YAML syntax
 - Circular dependencies
+
+---
+
+## 👥 Credits & Community
+
+Created by: **Lily Yang**, **0xff**, **Community**, **Black Roots**, **CifSec**  
+Sponsored by: **1Cloud Next Generation (1CNG)**
+
+🌐 [1cng.cloud](https://1cng.cloud) | 💬 [Telegram](https://t.me/noc_community) | 🐦 [@1CNG_NOC](https://twitter.com/1CNG_NOC)
+
+See [CREDITS.md](CREDITS.md) for full details.

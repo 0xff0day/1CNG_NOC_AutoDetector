@@ -1,5 +1,7 @@
 # Troubleshooting Guide
 
+> 📋 **See [Complete Features Reference](FEATURES.md) for module-specific troubleshooting**
+
 ## Common Issues and Solutions
 
 ### 1. Connection Issues
@@ -216,7 +218,8 @@ EOF
 
 # Example: Fix CPU parsing
 # Old:
-# m = re.search(r"CPU utilization.*?(\?\n?\d+)%", output)
+# m = re.search(r"CPU utilization.*?(\
+?\n?\d+)%", output)
 
 # New (handle different format):
 m = re.search(r"CPU utilization.*?([0-9.]+)%", output, re.IGNORECASE | re.DOTALL)
@@ -746,3 +749,14 @@ A: Use `nocctl backup create` or copy data/noc.db while service is stopped.
 
 **Q: Can I run multiple NOC instances?**
 A: Yes, use separate config files and data directories.
+
+---
+
+## 👥 Credits & Community
+
+Created by: **Lily Yang**, **0xff**, **Community**, **Black Roots**, **CifSec**  
+Sponsored by: **1Cloud Next Generation (1CNG)**
+
+🌐 [1cng.cloud](https://1cng.cloud) | 💬 [Telegram](https://t.me/noc_community) | 🐦 [@1CNG_NOC](https://twitter.com/1CNG_NOC)
+
+See [CREDITS.md](CREDITS.md) for full details.

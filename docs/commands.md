@@ -1,5 +1,7 @@
 # Command Reference
 
+> 📋 **See [Complete Features Reference](FEATURES.md) for all 50+ modules that these commands control**
+
 Complete reference for all `nocctl` commands.
 
 ## Global Options
@@ -818,3 +820,14 @@ nocctl workflow schedule srv1 --enable
 - [Configuration Reference](configuration.md)
 - [Architecture Overview](architecture.md)
 - [Troubleshooting](troubleshooting.md)
+
+---
+
+## 👥 Credits & Community
+
+Created by: **Lily Yang**, **0xff**, **Community**, **Black Roots**, **CifSec**  
+Sponsored by: **1Cloud Next Generation (1CNG)**
+
+🌐 [1cng.cloud](https://1cng.cloud) | 💬 [Telegram](https://t.me/noc_community) | 🐦 [@1CNG_NOC](https://twitter.com/1CNG_NOC)
+
+See [CREDITS.md](CREDITS.md) for full details.
