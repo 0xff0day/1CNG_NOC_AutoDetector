@@ -1,0 +1,137 @@
+system:
+  timezone: "UTC"
+  data_dir: "./data"
+  db_path: "./data/noc.db"
+  log_level: "INFO"
+
+collector:
+  ssh:
+    connect_timeout_sec: 10
+    command_timeout_sec: 15
+    max_sessions: 50
+  telnet:
+    connect_timeout_sec: 10
+    command_timeout_sec: 20
+  retries:
+    attempts: 2
+    sleep_sec: 0.5
+
+credentials:
+  # Use env vars in production; file-based vault is supported as a baseline.
+  # For env usage, set username/password in device entries.
+  vault_file: "./config/credentials.yaml"
+
+devices:
+  - id: "r1"
+    name: "R1"
+    host: "10.0.0.1"
+    transport: "ssh"   # ssh|telnet
+    os: "cisco_ios"
+    credential_ref: "lab"
+    tags: ["network", "core"]
+
+  - id: "srv1"
+    name: "SRV1"
+    host: "10.0.0.50"
+    transport: "ssh"
+    os: "ubuntu"
+    credential_ref: "lab"
+    tags: ["server"]
+
+polling:
+  fast_sec: 10
+  normal_sec: 60
+  deep_audit_sec: 3600
+
+ai:
+  thresholds:
+    CPU_USAGE:
+      warn: 75
+      crit: 90
+    MEMORY_USAGE:
+      warn: 80
+      crit: 95
+    DISK_USAGE:
+      warn: 80
+      crit: 95
+  anomaly:
+    window_points: 30
+    zscore_warn: 2.5
+    zscore_crit: 3.5
+  flapping:
+    window_sec: 300
+    state_change_warn: 6
+    state_change_crit: 12
+
+correlation:
+  # Optional dependency mapping for impact and root-cause suggestions.
+  dependencies:
+    - upstream: "r1"
+      downstream: "srv1"
+
+alerting:
+  cooldown_sec: 300
+  cooldown_by_severity:
+    info: 600
+    warning: 300
+    critical: 120
+  dedupe_key_fields: ["device_id", "variable", "alert_type"]
+  critical_after_n:
+    default: 0
+    threshold: 3
+    offline: 1
+
+  maintenance_windows:
+    - tags: ["core"]
+      start_ts: "2026-02-10T02:00:00+00:00"
+      end_ts: "2026-02-10T03:00:00+00:00"
+      reason: "Core maintenance"
+
+  silences:
+    - tags: ["server"]
+      variables: ["LOG_ERRORS"]
+      start_ts: "2026-02-10T00:00:00+00:00"
+      end_ts: "2026-02-10T06:00:00+00:00"
+      reason: "Patch window"
+
+  contact_groups:
+    default:
+      telegram_chat_id: "${TELEGRAM_CHAT_ID}"
+    noc_oncall:
+      telegram_chat_id: "${TELEGRAM_CHAT_ID}"
+
+  routes:
+    - tags: ["core"]
+      severities: ["critical"]
+      contact_group: "noc_oncall"
+      channels: ["telegram", "voice_call"]
+    - tags: ["server"]
+      contact_group: "default"
+      channels: ["telegram"]
+
+integrations:
+  telegram:
+    enabled: false
+    bot_token: "${TELEGRAM_BOT_TOKEN}"
+    chat_id: "${TELEGRAM_CHAT_ID}"
+  voice_call:
+    enabled: false
+    provider: "twilio"
+    account_sid: "${TWILIO_ACCOUNT_SID}"
+    auth_token: "${TWILIO_AUTH_TOKEN}"
+    from_number: "+15555550100"
+    to_numbers: ["+15555550101"]
+
+reporting:
+  output_dir: "./reports"
+  schedules:
+    hourly: true
+    daily: true
+    monthly: false
+    yearly: false
+  formats: ["json", "txt", "xlsx"]
+
+retention:
+  metrics_days: 30
+  alerts_days: 180
+  rollup_keep_days: 365

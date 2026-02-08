@@ -1,0 +1,6 @@
+session:
+  mode: exec
+commands:
+  normal:
+    cpu: ''
+  deep_audit: {}

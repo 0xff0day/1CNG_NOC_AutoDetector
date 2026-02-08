@@ -1,0 +1,20 @@
+topics:
+  cpu:
+    title: "Junos CPU"
+    recommended_commands:
+      - "show system processes extensive"
+  memory:
+    title: "Junos memory"
+    recommended_commands:
+      - "show system memory"
+  interfaces:
+    title: "Interfaces"
+    recommended_commands:
+      - "show interfaces terse"
+      - "show interfaces extensive"
+  routing:
+    title: "Routing"
+    recommended_commands:
+      - "show route summary"
+      - "show ospf neighbor"
+      - "show bgp summary"

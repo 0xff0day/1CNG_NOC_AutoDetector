@@ -1,0 +1,19 @@
+topics:
+  cpu:
+    title: "NX-OS CPU"
+    recommended_commands:
+      - "show system resources"
+  memory:
+    title: "NX-OS memory"
+    recommended_commands:
+      - "show system resources"
+  interfaces:
+    title: "Interface status"
+    recommended_commands:
+      - "show interface status"
+      - "show interface counters errors"
+  routing:
+    title: "Routing"
+    recommended_commands:
+      - "show ip route summary"
+      - "show bgp summary"

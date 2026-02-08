@@ -1,0 +1,18 @@
+topics:
+  cpu:
+    title: "Proxmox CPU"
+    recommended_commands:
+      - "top -bn1"
+  vms:
+    title: "VMs"
+    recommended_commands:
+      - "qm list"
+      - "qm status <vmid>"
+  containers:
+    title: "CTs"
+    recommended_commands:
+      - "pct list"
+  storage:
+    title: "Storage"
+    recommended_commands:
+      - "pvesm status"

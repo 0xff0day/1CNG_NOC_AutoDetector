@@ -1,0 +1,7 @@
+schema:
+  os: huawei_vrp
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: cpu

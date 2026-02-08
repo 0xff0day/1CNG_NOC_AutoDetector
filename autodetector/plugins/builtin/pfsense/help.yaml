@@ -1,0 +1,29 @@
+topics:
+  cpu:
+    title: "pfSense CPU"
+    recommended_commands:
+      - "top -b -n 1"
+      - "sysctl -a | grep hw.model"
+  memory:
+    title: "Memory"
+    recommended_commands:
+      - "vmstat -s"
+      - "sysctl vm.stats.vm"
+  disk:
+    title: "Disk"
+    recommended_commands:
+      - "df -h"
+  interfaces:
+    title: "Interfaces"
+    recommended_commands:
+      - "ifconfig -a"
+      - "netstat -i"
+  routing:
+    title: "Routing"
+    recommended_commands:
+      - "netstat -rn"
+  logs:
+    title: "System logs"
+    recommended_commands:
+      - "clog /var/log/system.log | tail -n 200"
+      - "clog /var/log/filter.log | tail -n 200"

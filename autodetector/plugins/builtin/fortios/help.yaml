@@ -1,0 +1,19 @@
+topics:
+  cpu:
+    title: "FortiOS CPU/Memory"
+    recommended_commands:
+      - "get system performance status"
+  interfaces:
+    title: "Interfaces"
+    recommended_commands:
+      - "get system interface"
+      - "diagnose hardware deviceinfo nic"
+  routing:
+    title: "Routing"
+    recommended_commands:
+      - "get router info routing-table summary"
+  logs:
+    title: "Logs"
+    recommended_commands:
+      - "execute log filter category event"
+      - "execute log display"

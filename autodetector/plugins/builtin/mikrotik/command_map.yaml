@@ -1,0 +1,14 @@
+session:
+  mode: exec
+commands:
+  normal:
+    cpu: "/system resource print"
+    memory: "/system resource print"
+    interfaces: "/interface print terse"
+    interface_errors: "/interface ethernet print stats"
+    routing: "/ip route print count-only"
+    logs: "/log print without-paging"
+    uptime: "/system resource print"
+  deep_audit:
+    health: "/system health print"
+    identity: "/system identity print"

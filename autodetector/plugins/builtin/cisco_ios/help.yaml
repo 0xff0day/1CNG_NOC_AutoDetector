@@ -1,0 +1,26 @@
+topics:
+  cpu:
+    title: "CPU monitoring"
+    recommended_commands:
+      - "show processes cpu"
+      - "show processes cpu history"
+    notes:
+      - "Look at 5s/1m/5m utilization and check for spikes."
+  memory:
+    title: "Memory monitoring"
+    recommended_commands:
+      - "show memory statistics"
+      - "show processes memory sorted"
+  interfaces:
+    title: "Interface status and errors"
+    recommended_commands:
+      - "show interfaces status"
+      - "show interfaces counters errors"
+      - "show interfaces <int>"
+  routing:
+    title: "Routing health"
+    recommended_commands:
+      - "show ip route summary"
+      - "show ip protocols"
+      - "show ip ospf neighbor"
+      - "show ip bgp summary"

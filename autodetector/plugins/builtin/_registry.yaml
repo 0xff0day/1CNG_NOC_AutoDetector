@@ -1,0 +1,55 @@
+network:
+  - cisco_ios
+  - cisco_nxos
+  - cisco_iosxe
+  - junos
+  - mikrotik
+  - fortios
+  - panos
+  - huawei_vrp
+  - arubaos
+  - comware
+  - edgeos
+  - unifi_os
+  - dell_os10
+  - arista_eos
+  - checkpoint_gaia
+  - sophos_sfos
+  - vyos
+  - pfsense
+  - opnsense
+  - omada
+  - ruijie_rgos
+  - extreme_exos
+
+server:
+  - ubuntu
+  - debian
+  - centos
+  - rhel
+  - rocky
+  - alma
+  - fedora
+  - arch
+  - kali
+  - suse
+  - opensuse
+  - amazon_linux
+  - oracle_linux
+  - freebsd
+  - openbsd
+  - netbsd
+  - windows_server
+  - macos
+
+hypervisor:
+  - vmware_esxi
+  - proxmox
+  - hyperv
+  - kvm
+  - xen
+  - xcpng
+  - nutanix_ahv
+  - openstack
+  - virtualbox_headless
+  - docker_host

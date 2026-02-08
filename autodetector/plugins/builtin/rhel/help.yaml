@@ -1,0 +1,26 @@
+topics:
+  cpu:
+    title: "RHEL CPU"
+    recommended_commands:
+      - "top -bn1"
+      - "mpstat -P ALL 1 5"
+  memory:
+    title: "RHEL memory"
+    recommended_commands:
+      - "free -m"
+      - "vmstat 1 5"
+  disk:
+    title: "Disk"
+    recommended_commands:
+      - "df -h"
+      - "iostat -xz 1 5"
+  interfaces:
+    title: "Interfaces"
+    recommended_commands:
+      - "ip -s link"
+      - "ethtool -S <iface>"
+  logs:
+    title: "System errors"
+    recommended_commands:
+      - "journalctl -p err..alert -n 200 --no-pager"
+      - "dmesg -T | tail -n 200"

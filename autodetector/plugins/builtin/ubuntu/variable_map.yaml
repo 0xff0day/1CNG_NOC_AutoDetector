@@ -1,0 +1,27 @@
+schema:
+  os: ubuntu
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: cpu
+    MEMORY_USAGE:
+      type: gauge
+      unit: percent
+      source_command: memory
+    DISK_USAGE:
+      type: gauge
+      unit: percent
+      source_command: disk
+    LOAD:
+      type: gauge
+      unit: load
+      source_command: load
+    INTERFACE_STATUS:
+      type: state
+      unit: text
+      source_command: interfaces
+    LOG_ERRORS:
+      type: counter
+      unit: count
+      source_command: logs

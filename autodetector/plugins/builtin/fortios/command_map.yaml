@@ -1,0 +1,20 @@
+session:
+  mode: shell
+  prompt_regex: "[#$]\\s*$"
+  pre_commands:
+    - "config system console"
+    - "set output standard"
+    - "end"
+
+commands:
+  normal:
+    cpu: "get system performance status"
+    memory: "get system performance status"
+    interfaces: "get system interface"
+    interface_errors: "diagnose hardware deviceinfo nic"
+    routing: "get router info routing-table summary"
+    logs: "execute log filter category event"
+    uptime: "get system status"
+  deep_audit:
+    ha: "get system ha status"
+    sessions: "diagnose sys session stat"

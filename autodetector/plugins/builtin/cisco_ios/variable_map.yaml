@@ -1,0 +1,27 @@
+schema:
+  os: cisco_ios
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: cpu
+    MEMORY_USAGE:
+      type: gauge
+      unit: percent
+      source_command: memory
+    INTERFACE_STATUS:
+      type: state
+      unit: text
+      source_command: interfaces
+    ROUTING_STATE:
+      type: state
+      unit: text
+      source_command: routing
+    LOG_ERRORS:
+      type: counter
+      unit: count
+      source_command: logs
+    UPTIME:
+      type: gauge
+      unit: seconds
+      source_command: uptime

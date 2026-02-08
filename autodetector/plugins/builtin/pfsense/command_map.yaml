@@ -1,0 +1,16 @@
+session:
+  mode: exec
+commands:
+  normal:
+    cpu: "COLUMNS=200 top -b -n 1 | head -n 20"
+    memory: "sysctl -n hw.physmem vm.stats.vm.v_page_count vm.stats.vm.v_free_count 2>/dev/null; vmstat -s | head -n 20"
+    disk: "df -k"
+    load: "uptime"
+    interfaces: "ifconfig -a"
+    interface_errors: "netstat -i"
+    routing: "netstat -rn"
+    logs: "clog /var/log/system.log | tail -n 100"
+    uptime: "uptime"
+  deep_audit:
+    pf: "pfctl -s info"
+    states: "pfctl -s memory"

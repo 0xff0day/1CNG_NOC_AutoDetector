@@ -1,0 +1,38 @@
+schema:
+  os: vmware_esxi
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: load
+      weight: 1.2
+    MEMORY_USAGE:
+      type: gauge
+      unit: percent
+      source_command: memory
+      weight: 1.0
+    DISK_USAGE:
+      type: gauge
+      unit: percent
+      source_command: disk
+      weight: 0.8
+    LOAD:
+      type: gauge
+      unit: load
+      source_command: uptime
+      weight: 0.6
+    INTERFACE_STATUS:
+      type: state
+      unit: text
+      source_command: interfaces
+      weight: 1.0
+    LOG_ERRORS:
+      type: counter
+      unit: count
+      source_command: logs
+      weight: 0.6
+    UPTIME:
+      type: gauge
+      unit: seconds
+      source_command: uptime
+      weight: 0.2

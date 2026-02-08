@@ -1,0 +1,12 @@
+commands:
+  normal:
+    cpu: "esxcli hardware cpu global get"
+    memory: "esxcli hardware memory get"
+    load: "esxtop -b -n 1 | head -n 50"
+    disk: "esxcli storage filesystem list"
+    interfaces: "esxcli network nic list"
+    logs: "tail -n 100 /var/log/vmkernel.log"
+    uptime: "uptime"
+  deep_audit:
+    vms: "vim-cmd vmsvc/getallvms"
+    host: "esxcli system version get"

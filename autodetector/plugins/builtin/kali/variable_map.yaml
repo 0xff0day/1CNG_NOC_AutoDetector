@@ -1,0 +1,7 @@
+schema:
+  os: kali
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: cpu

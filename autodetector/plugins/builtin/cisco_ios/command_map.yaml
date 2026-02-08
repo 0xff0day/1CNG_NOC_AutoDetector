@@ -1,0 +1,19 @@
+session:
+  mode: shell
+  prompt_regex: "[>#]\\s*$"
+  pre_commands:
+    - "terminal length 0"
+    - "terminal width 200"
+
+commands:
+  normal:
+    cpu: "show processes cpu | include five seconds"
+    memory: "show memory statistics"
+    interfaces: "show interfaces status"
+    routing: "show ip route summary"
+    logs: "show logging | last 50"
+    uptime: "show version | include uptime"
+  deep_audit:
+    environment: "show environment all"
+    power: "show environment power"
+    temperature: "show environment temperature"

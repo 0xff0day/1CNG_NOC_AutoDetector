@@ -1,0 +1,20 @@
+session:
+  mode: shell
+  prompt_regex: "[>#]\\s*$"
+  pre_commands:
+    - "set cli screen-length 0"
+    - "set cli screen-width 200"
+
+commands:
+  normal:
+    cpu: "show system processes extensive | match CPU"
+    memory: "show system memory"
+    interfaces: "show interfaces terse"
+    interface_errors: "show interfaces extensive | match errors"
+    routing: "show route summary"
+    logs: "show log messages | last 50"
+    uptime: "show system uptime"
+  deep_audit:
+    environment: "show chassis environment"
+    power: "show chassis power"
+    temperature: "show chassis temperature-threshold"

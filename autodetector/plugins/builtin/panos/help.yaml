@@ -1,0 +1,17 @@
+topics:
+  cpu:
+    title: "PAN-OS CPU/Memory"
+    recommended_commands:
+      - "show system resources"
+  interfaces:
+    title: "Interfaces"
+    recommended_commands:
+      - "show interface all"
+  routing:
+    title: "Routing"
+    recommended_commands:
+      - "show routing route summary"
+  logs:
+    title: "System logs"
+    recommended_commands:
+      - "show log system direction equal backward"

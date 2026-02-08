@@ -1,0 +1,18 @@
+topics:
+  cpu:
+    title: "ESXi CPU"
+    recommended_commands:
+      - "esxtop"
+      - "esxcli hardware cpu global get"
+  memory:
+    title: "ESXi memory"
+    recommended_commands:
+      - "esxcli hardware memory get"
+  disk:
+    title: "Datastores"
+    recommended_commands:
+      - "esxcli storage filesystem list"
+  vms:
+    title: "VM inventory"
+    recommended_commands:
+      - "vim-cmd vmsvc/getallvms"

@@ -1,0 +1,16 @@
+session:
+  mode: exec
+commands:
+  normal:
+    cpu: "COLUMNS=200 top -bn1 | head -n 20"
+    memory: "free -m"
+    disk: "df -P"
+    load: "uptime"
+    interfaces: "ip -s link"
+    interface_errors: "ip -s link"
+    routing: "ip route | head -n 200"
+    logs: "journalctl -p err..alert -n 50 --no-pager"
+    uptime: "uptime"
+  deep_audit:
+    dmesg: "dmesg -T | tail -n 100"
+    services: "systemctl --failed --no-pager"

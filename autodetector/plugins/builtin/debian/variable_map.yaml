@@ -1,0 +1,7 @@
+schema:
+  os: debian
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: cpu

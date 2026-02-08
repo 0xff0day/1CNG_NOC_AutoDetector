@@ -1,0 +1,22 @@
+topics:
+  cpu:
+    title: "Windows CPU"
+    recommended_commands:
+      - "powershell Get-Counter '\\Processor(_Total)\\% Processor Time'"
+  memory:
+    title: "Windows memory"
+    recommended_commands:
+      - "powershell Get-CimInstance Win32_OperatingSystem"
+  disk:
+    title: "Windows disk"
+    recommended_commands:
+      - "powershell Get-CimInstance Win32_LogicalDisk -Filter 'DriveType=3'"
+  interfaces:
+    title: "Network adapters"
+    recommended_commands:
+      - "powershell Get-NetAdapter"
+      - "powershell Get-NetAdapterStatistics"
+  logs:
+    title: "System event log errors"
+    recommended_commands:
+      - "powershell Get-WinEvent -FilterHashtable @{LogName='System';Level=1,2} -MaxEvents 200"

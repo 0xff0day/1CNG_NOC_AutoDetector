@@ -1,0 +1,24 @@
+topics:
+  cpu:
+    title: "CPU monitoring"
+    recommended_commands:
+      - "top -bn1"
+      - "mpstat -P ALL 1 5"
+      - "ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head"
+  memory:
+    title: "Memory monitoring"
+    recommended_commands:
+      - "free -m"
+      - "vmstat 1 5"
+      - "ps -eo pid,cmd,%mem --sort=-%mem | head"
+  disk:
+    title: "Disk monitoring"
+    recommended_commands:
+      - "df -h"
+      - "du -sh /* 2>/dev/null | sort -h | tail"
+      - "iostat -xz 1 5"
+  logs:
+    title: "Error logs"
+    recommended_commands:
+      - "journalctl -p err..alert -n 200 --no-pager"
+      - "dmesg -T | tail -n 200"

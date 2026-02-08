@@ -1,0 +1,18 @@
+session:
+  mode: shell
+  prompt_regex: "[>#]\\s*$"
+  pre_commands:
+    - "set cli pager off"
+
+commands:
+  normal:
+    cpu: "show system resources"
+    memory: "show system resources"
+    interfaces: "show interface all"
+    interface_errors: "show interface all"
+    routing: "show routing route summary"
+    logs: "show log system direction equal backward"
+    uptime: "show system info"
+  deep_audit:
+    sessions: "show session info"
+    ha: "show high-availability state"

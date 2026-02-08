@@ -1,0 +1,19 @@
+topics:
+  cpu:
+    title: "RouterOS CPU/Memory"
+    recommended_commands:
+      - "/system resource print"
+  interfaces:
+    title: "Interfaces and errors"
+    recommended_commands:
+      - "/interface print terse"
+      - "/interface ethernet print stats"
+  routing:
+    title: "Routing"
+    recommended_commands:
+      - "/ip route print"
+      - "/routing bgp session print"
+  logs:
+    title: "Logs"
+    recommended_commands:
+      - "/log print without-paging"

@@ -1,0 +1,11 @@
+commands:
+  normal:
+    cpu: "COLUMNS=200 top -bn1 | head -n 20"
+    memory: "free -m"
+    disk: "df -P"
+    load: "uptime"
+    interfaces: "ip -s link"
+    logs: "journalctl -p err..alert -n 50 --no-pager"
+  deep_audit:
+    dmesg: "dmesg -T | tail -n 100"
+    sysctl: "sysctl -a 2>/dev/null | head -n 200"

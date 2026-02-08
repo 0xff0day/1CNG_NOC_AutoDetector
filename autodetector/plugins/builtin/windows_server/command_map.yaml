@@ -1,0 +1,14 @@
+session:
+  mode: exec
+commands:
+  normal:
+    cpu: "powershell -NoProfile -Command \"$v=(Get-Counter '\\\\Processor(_Total)\\\\% Processor Time').CounterSamples[0].CookedValue; @{cpu=[math]::Round($v,2)} | ConvertTo-Json -Compress\""
+    memory: "powershell -NoProfile -Command \"$os=Get-CimInstance Win32_OperatingSystem; $t=[double]$os.TotalVisibleMemorySize; $f=[double]$os.FreePhysicalMemory; $u=($t-$f)/$t*100; @{mem=[math]::Round($u,2)} | ConvertTo-Json -Compress\""
+    disk: "powershell -NoProfile -Command \"$dr=Get-CimInstance Win32_LogicalDisk -Filter \"DriveType=3\" | Select-Object DeviceID,Size,FreeSpace; $out=@(); foreach($d in $dr){ if($d.Size -gt 0){ $out += @{drive=$d.DeviceID; usedPct=[math]::Round((($d.Size-$d.FreeSpace)/$d.Size)*100,2)} } }; @{disks=$out} | ConvertTo-Json -Compress\""
+    load: "powershell -NoProfile -Command \"$v=(Get-Counter '\\\\System\\\\Processor Queue Length').CounterSamples[0].CookedValue; @{queue=[math]::Round($v,2)} | ConvertTo-Json -Compress\""
+    interfaces: "powershell -NoProfile -Command \"Get-NetAdapter | Select-Object Name,Status,LinkSpeed | ConvertTo-Json -Compress\""
+    interface_errors: "powershell -NoProfile -Command \"Get-NetAdapterStatistics | Select-Object Name,ReceivedErrors,OutboundErrors,ReceivedDiscarded,OutboundDiscarded | ConvertTo-Json -Compress\""
+    logs: "powershell -NoProfile -Command \"Get-WinEvent -FilterHashtable @{LogName='System'; Level=1,2} -MaxEvents 50 | Select-Object TimeCreated,Id,LevelDisplayName,ProviderName,Message | ConvertTo-Json -Compress\""
+    uptime: "powershell -NoProfile -Command \"$os=Get-CimInstance Win32_OperatingSystem; $b=$os.LastBootUpTime; @{boot=$b} | ConvertTo-Json -Compress\""
+  deep_audit:
+    services: "powershell -NoProfile -Command \"Get-Service | Where-Object {$_.Status -ne 'Running'} | Select-Object Name,Status,StartType | ConvertTo-Json -Compress\""

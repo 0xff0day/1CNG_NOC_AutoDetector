@@ -1,0 +1,38 @@
+schema:
+  os: junos
+  variables:
+    CPU_USAGE:
+      type: gauge
+      unit: percent
+      source_command: cpu
+      weight: 1.2
+    MEMORY_USAGE:
+      type: gauge
+      unit: percent
+      source_command: memory
+      weight: 1.0
+    INTERFACE_STATUS:
+      type: state
+      unit: text
+      source_command: interfaces
+      weight: 1.5
+    INTERFACE_ERRORS:
+      type: counter
+      unit: count
+      source_command: interface_errors
+      weight: 1.3
+    ROUTING_STATE:
+      type: state
+      unit: text
+      source_command: routing
+      weight: 1.5
+    LOG_ERRORS:
+      type: counter
+      unit: count
+      source_command: logs
+      weight: 0.6
+    UPTIME:
+      type: gauge
+      unit: seconds
+      source_command: uptime
+      weight: 0.2
