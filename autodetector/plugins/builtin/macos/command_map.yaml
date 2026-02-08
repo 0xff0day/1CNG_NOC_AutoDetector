@@ -1,6 +1,18 @@
 session:
   mode: exec
+
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -l 1 -n 10 | head -20"
+    memory: "vm_stat"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ifconfig -a"
+    interface_errors: "netstat -i"
+    logs: "log show --last 1h --predicate 'eventMessage CONTAINS \"error\"' 2>/dev/null || tail -n 100 /var/log/system.log"
+    uptime: "uptime"
+    temperature: "istats cpu 2>/dev/null || echo 'N/A'"
+    power: "pmset -g batt"
+  deep_audit:
+    system_profiler: "system_profiler SPHardwareDataType"
+    dmesg: "dmesg | tail -n 100"

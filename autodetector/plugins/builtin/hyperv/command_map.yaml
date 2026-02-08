@@ -1,6 +1,16 @@
 session:
   mode: exec
+
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "Get-Date; Get-Counter '\Processor(_Total)\\% Processor Time' -SampleInterval 1 -MaxSamples 1 | Select-Object -ExpandProperty CounterSamples | Select-Object CookedValue | ConvertTo-Json"
+    memory: "Get-WmiObject -Class Win32_OperatingSystem | Select-Object TotalVisibleMemorySize, FreePhysicalMemory | ConvertTo-Json"
+    disk: "Get-WmiObject -Class Win32_LogicalDisk | Select-Object DeviceID, Size, FreeSpace | ConvertTo-Json"
+    load: "Get-WmiObject -Class Win32_Processor | Select-Object LoadPercentage | ConvertTo-Json"
+    vms: "Get-VM | Select-Object Name, State, Uptime | ConvertTo-Json"
+    interfaces: "Get-NetAdapter | Select-Object Name, Status, LinkSpeed | ConvertTo-Json"
+    logs: "Get-EventLog -LogName System -EntryType Error -Newest 50 | Select-Object TimeGenerated, Source, Message | ConvertTo-Json"
+    uptime: "Get-Date"
+  deep_audit:
+    vm_details: "Get-VM | Select-Object * | ConvertTo-Json"
+    switches: "Get-VMSwitch | Select-Object Name, SwitchType | ConvertTo-Json"

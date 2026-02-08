@@ -2,5 +2,14 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -bn1 | grep 'Cpu(s)'"
+    memory: "free -m"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    vms: "acli vm.list"
+    logs: "journalctl -n 50 --no-pager"
+    uptime: "uptime"
+  deep_audit:
+    cluster: "acli cluster.get"
+    storage: "acli storagecontainer.list"

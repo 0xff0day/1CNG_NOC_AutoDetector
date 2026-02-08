@@ -2,5 +2,14 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -bn1 | grep 'Cpu(s)'"
+    memory: "free -m"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    vms: "openstack server list"
+    logs: "journalctl -u devstack@* -n 50 --no-pager"
+    uptime: "uptime"
+  deep_audit:
+    hypervisors: "openstack hypervisor list"
+    services: "openstack service list"

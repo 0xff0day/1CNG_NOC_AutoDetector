@@ -25,3 +25,18 @@ schema:
       type: gauge
       unit: seconds
       source_command: uptime
+    TEMPERATURE:
+      type: gauge
+      unit: celsius
+      source_command: temperature
+      description: "Device temperature readings"
+    POWER_STATUS:
+      type: state
+      unit: text
+      source_command: power
+      description: "Power supply status"
+    HARDWARE_HEALTH:
+      type: state
+      unit: text
+      source_command: hardware
+      description: "Overall hardware health status"

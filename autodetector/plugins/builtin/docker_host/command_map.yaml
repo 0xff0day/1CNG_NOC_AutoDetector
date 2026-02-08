@@ -2,5 +2,18 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -bn1 | grep 'Cpu(s)'"
+    memory: "free -m"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    containers: "docker ps -a"
+    running_containers: "docker ps -q | wc -l"
+    images: "docker images -q | wc -l"
+    volumes: "docker volume ls -q | wc -l"
+    logs: "journalctl -u docker -n 50 --no-pager"
+    uptime: "uptime"
+    system_df: "docker system df"
+  deep_audit:
+    info: "docker info"
+    networks: "docker network ls"

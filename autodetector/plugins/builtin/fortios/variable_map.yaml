@@ -36,3 +36,21 @@ schema:
       unit: seconds
       source_command: uptime
       weight: 0.2
+    TEMPERATURE:
+      type: gauge
+      unit: celsius
+      source_command: temperature
+      weight: 0.8
+      description: "Device temperature"
+    POWER_STATUS:
+      type: state
+      unit: text
+      source_command: power
+      weight: 0.9
+      description: "Power supply status"
+    HARDWARE_HEALTH:
+      type: state
+      unit: text
+      source_command: hardware
+      weight: 0.9
+      description: "Hardware health"

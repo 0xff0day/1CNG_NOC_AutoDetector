@@ -1,6 +1,16 @@
 session:
   mode: exec
+
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "show cpu usage"
+    memory: "show memory usage"
+    interfaces: "show interface"
+    interface_errors: "show interface counters"
+    routing: "show ip route"
+    logs: "show log viewer"
+    uptime: "show uptime"
+    temperature: "show temperature"
+  deep_audit:
+    config: "show conf"
+    version: "show version"

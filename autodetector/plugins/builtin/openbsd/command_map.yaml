@@ -2,5 +2,14 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -b -n 1 | head -20"
+    memory: "vmstat -s | head -20"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ifconfig -a"
+    interface_errors: "netstat -i"
+    logs: "tail -n 100 /var/log/messages"
+    uptime: "uptime"
+    temperature: "sysctl hw.sensors | grep temp"
+  deep_audit:
+    dmesg: "dmesg | tail -n 100"

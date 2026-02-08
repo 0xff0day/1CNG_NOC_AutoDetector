@@ -2,5 +2,14 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -bn1 | grep 'Cpu(s)'"
+    memory: "free -m"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    logs: "journalctl -p err..alert -n 50 --no-pager 2>/dev/null || tail -100 /var/log/messages"
+    uptime: "uptime"
+    processes: "ps aux | wc -l"
+  deep_audit:
+    services: "systemctl --failed --no-pager"
+    dmesg: "dmesg -T | tail -n 100"

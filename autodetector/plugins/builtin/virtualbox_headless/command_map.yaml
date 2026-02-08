@@ -2,5 +2,15 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "top -bn1 | grep 'Cpu(s)'"
+    memory: "free -m"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    vms: "VBoxManage list vms"
+    running_vms: "VBoxManage list runningvms"
+    logs: "journalctl -n 50 --no-pager"
+    uptime: "uptime"
+  deep_audit:
+    hostinfo: "VBoxManage hostinfo"
+    dhcpservers: "VBoxManage list dhcpservers"

@@ -2,5 +2,14 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "virsh nodecpustats"
+    memory: "virsh nodememstats"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    vms: "virsh list --all"
+    logs: "journalctl -u libvirtd -n 50 --no-pager"
+    uptime: "uptime"
+  deep_audit:
+    networks: "virsh net-list --all"
+    pools: "virsh pool-list --all"

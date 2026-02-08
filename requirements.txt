@@ -8,3 +8,12 @@ pysnmp==4.4.12
 psutil==5.9.6
 prometheus-client==0.19.0
 cryptography==41.0.7
+
+# Local LLM Dependencies
+torch>=2.0.0
+transformers>=4.35.0
+llama-cpp-python>=0.2.0
+peft>=0.6.0
+bitsandbytes>=0.41.0
+accelerate>=0.24.0
+datasets>=2.14.0

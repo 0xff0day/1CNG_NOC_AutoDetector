@@ -2,5 +2,14 @@ session:
   mode: exec
 commands:
   normal:
-    cpu: ''
-  deep_audit: {}
+    cpu: "xl info | grep nr_cpus"
+    memory: "xl info | grep total_memory"
+    disk: "df -h"
+    load: "uptime"
+    interfaces: "ip -s link"
+    vms: "xl list"
+    logs: "tail -n 100 /var/log/xen/xend.log 2>/dev/null || journalctl -u xend -n 50"
+    uptime: "uptime"
+  deep_audit:
+    networks: "xl network-list"
+    info: "xl info"
