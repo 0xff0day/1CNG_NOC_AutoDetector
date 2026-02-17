@@ -17,6 +17,9 @@ from autodetector.reporting.generator import generate_reports
 from autodetector.scheduler.scheduler import run_scheduler
 from autodetector.storage.sqlite_store import SqliteStore
 
+from cli.commands.llm_commands import add_llm_subparser, handle_llm_command
+from cli.commands.assistant_commands import add_assistant_subparser, handle_assistant_command
+
 
 console = Console()
 
@@ -82,6 +85,9 @@ def main(argv=None):
 
     sp_boot = sp.add_parser("bootstrap", help="Create missing skeleton plugins from registry")
     sp_boot.add_argument("--dir", default=builtin_plugins_root(), help="Target plugins directory")
+
+    add_llm_subparser(sub)
+    add_assistant_subparser(sub)
 
     args = parser.parse_args(argv)
 
@@ -203,3 +209,11 @@ def main(argv=None):
                     created += 1
             console.print(f"Bootstrapped {created} plugin skeletons")
             return
+
+    if args.cmd == "llm":
+        rc = handle_llm_command(args)
+        raise SystemExit(rc)
+
+    if args.cmd == "assistant":
+        rc = handle_assistant_command(args, cfg=cfg, store=store)
+        raise SystemExit(rc)

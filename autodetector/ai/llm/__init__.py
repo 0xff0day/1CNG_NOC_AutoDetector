@@ -25,6 +25,7 @@ class ModelArchitecture(Enum):
     GPT = "gpt"           # GPT-style (decoder-only transformer)
     CLAUDE = "claude"     # Claude-style (constitutional AI)
     GEMINI = "gemini"     # Gemini-style (multimodal transformer)
+    OLLAMA = "ollama"     # Ollama-managed models via HTTP API
 
 
 @dataclass
@@ -299,8 +300,10 @@ class LLMRegistry:
 from .adapters.gpt_adapter import GPTAdapter
 from .adapters.claude_adapter import ClaudeAdapter
 from .adapters.gemini_adapter import GeminiAdapter
+from .adapters.ollama_adapter import OllamaAdapter
 
 # Register default adapters
 LLMRegistry.register_adapter(ModelArchitecture.GPT, GPTAdapter)
 LLMRegistry.register_adapter(ModelArchitecture.CLAUDE, ClaudeAdapter)
 LLMRegistry.register_adapter(ModelArchitecture.GEMINI, GeminiAdapter)
+LLMRegistry.register_adapter(ModelArchitecture.OLLAMA, OllamaAdapter)

@@ -1,0 +1,244 @@
+topics:
+  go_version:
+    title: "Go Version"
+    summary: "Check installed Go version"
+    command: "go version"
+    example_output: |
+      go version go1.21.5 linux/amd64
+    details: |
+      Displays the installed Go version, operating system, and architecture.
+      
+      Expected format: go version go{VERSION} {OS}/{ARCH}
+      
+      Common versions:
+      - 1.21.x: Latest stable (generics, improved performance)
+      - 1.20.x: Stable release
+      - 1.19.x: Previous stable
+      - 1.18.x: Introduced generics
+      
+  go_environment:
+    title: "Go Environment"
+    summary: "Show Go environment configuration"
+    command: "go env"
+    example_output: |
+      GO111MODULE=""
+      GOARCH="amd64"
+      GOBIN=""
+      GOCACHE="/home/user/.cache/go-build"
+      GOENV="/home/user/.config/go/env"
+      GOEXE=""
+      GOEXPERIMENT=""
+      GOFLAGS=""
+      GOHOSTARCH="amd64"
+      GOHOSTOS="linux"
+      GOINSECURE=""
+      GOMODCACHE="/home/user/go/pkg/mod"
+      GONOPROXY=""
+      GONOSUMDB=""
+      GOOS="linux"
+      GOPATH="/home/user/go"
+      GOPRIVATE=""
+      GOPROXY="https://proxy.golang.org,direct"
+      GOROOT="/usr/local/go"
+      GOSUMDB="sum.golang.org"
+      GOTMPDIR=""
+      GOTOOLCHAIN="auto"
+      GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64"
+      GOVCS=""
+      GOVERSION="go1.21.5"
+      GCCGO="gccgo"
+      GOAMD64="v1"
+    details: |
+      Displays Go environment variables and configuration.
+      Key variables to monitor:
+      
+      - GOPATH: Workspace directory for Go code
+      - GOROOT: Go installation directory
+      - GOMODCACHE: Module cache location
+      - GOVERSION: Installed version
+      
+  goroutines:
+    title: "Goroutines"
+    summary: "Monitor Go goroutine count"
+    command: "gops <pid>"
+    example_output: |
+      goroutines:\t42
+      OS threads:\t8
+      GOMAXPROCS:\t8
+      num CPU:\t8
+    details: |
+      Goroutines are lightweight threads managed by the Go runtime.
+      
+      Thresholds:
+      - Normal: < 1000 goroutines
+      - Warning: 1000-5000 goroutines
+      - Critical: > 5000 goroutines
+      
+      High goroutine counts may indicate:
+      - Goroutine leaks (goroutines spawned but never terminated)
+      - Event loop patterns with excessive concurrency
+      - Unbounded worker pools
+      
+      To investigate:
+      - Use gops stack <pid> to see goroutine stacks
+      - Check for blocking operations
+      - Review channel usage patterns
+      
+  go_memory:
+    title: "Go Memory Usage"
+    summary: "Monitor Go heap and memory statistics"
+    command: "curl http://localhost:6060/debug/pprof/heap"
+    example_output: |
+      heap profile: 1024: 1234567 [10240: 12345678] @ heap/1048576
+      1: 1024 [1: 10240] @ 0x45a320 0x45a2f0 ...
+      # runtime.mallocgc
+      ...
+    details: |
+      Go memory metrics include:
+      
+      - HeapAlloc: Bytes allocated and still in use
+      - HeapSys: Bytes obtained from system
+      - HeapInuse: Bytes in use by the allocator
+      - HeapIdle: Bytes idle and available for reuse
+      - HeapReleased: Bytes released to OS
+      
+      Memory leak indicators:
+      - Continuously increasing HeapAlloc
+      - HeapInuse growing without HeapIdle
+      - Low HeapReleased relative to HeapIdle
+      
+      Best practices:
+      - Set memory limits (GOMEMLIMIT)
+      - Profile periodically in production
+      - Monitor for spikes in allocation rate
+      
+  go_gc:
+    title: "Garbage Collection"
+    summary: "Monitor Go garbage collector performance"
+    command: "curl http://localhost:6060/debug/vars | grep NumGC"
+    example_output: |
+      "NumGC": 42,
+      "PauseNs": [12345, 23456, 34567, 0, 0, ...],
+      "PauseTotalNs": 123456789
+    details: |
+      Go uses a concurrent, tri-color mark-and-sweep GC.
+      
+      Key metrics:
+      - NumGC: Total GC cycles
+      - PauseNs: Last GC pause (nanoseconds)
+      - PauseTotalNs: Cumulative pause time
+      - GC CPU fraction: Percentage of CPU used by GC
+      
+      Thresholds:
+      - PauseNs warning: > 1ms
+      - PauseNs critical: > 10ms
+      
+      Tuning options:
+      - GOGC: Set GC target percentage (default 100)
+      - GOMEMLIMIT: Soft memory limit
+      
+  prometheus_metrics:
+    title: "Prometheus Metrics"
+    summary: "Fetch Prometheus-formatted metrics"
+    command: "curl http://localhost:9090/metrics"
+    example_output: |
+      # HELP go_goroutines Number of goroutines that currently exist.
+      # TYPE go_goroutines gauge
+      go_goroutines 42
+      
+      # HELP go_threads Number of OS threads created.
+      # TYPE go_threads gauge
+      go_threads 8
+      
+      # HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
+      # TYPE go_gc_duration_seconds summary
+      go_gc_duration_seconds{quantile="0"} 0.000123
+      go_gc_duration_seconds{quantile="0.25"} 0.000234
+    details: |
+      Many Go applications expose Prometheus metrics on /metrics endpoint.
+      
+      Standard Go runtime metrics:
+      - go_goroutines: Current goroutine count
+      - go_threads: OS thread count
+      - go_gc_duration_seconds: GC pause times
+      - go_memstats_*: Detailed memory statistics
+      - go_cpu_seconds_total: CPU time spent
+      
+      To enable in your app:
+      import _ "net/http/pprof"
+      http.ListenAndServe("localhost:6060", nil)
+      
+  expvar:
+    title: "Expvar Metrics"
+    summary: "Application metrics via expvar"
+    command: "curl http://localhost:6060/debug/vars"
+    example_output: |
+      {
+        "cmdline": ["./myapp", "-port=8080"],
+        "memstats": {...},
+        "my_custom_counter": 42
+      }
+    details: |
+      The expvar package exposes application variables.
+      
+      To add custom metrics:
+      
+      import "expvar"
+      
+      var (
+          requests = expvar.NewInt("requests")
+          errors   = expvar.NewInt("errors")
+      )
+      
+      func handler(w http.ResponseWriter, r *http.Request) {
+          requests.Add(1)
+          // ... handle request
+      }
+      
+      Available via /debug/vars endpoint.
+      
+  gops:
+    title: "gops Tool"
+    summary: "Google's process introspection tool"
+    command: "gops <pid>"
+    details: |
+      gops provides runtime introspection for Go processes.
+      
+      Installation:
+      go install github.com/google/gops@latest
+      
+      Common commands:
+      - gops: List Go processes
+      - gops <pid>: Stats for process
+      - gops stack <pid>: Stack trace
+      - gops memstats <pid>: Memory statistics
+      - gops trace <pid>: Execution trace
+      - gops pprof-heap <pid>: Heap profile
+      
+      To enable in your app:
+      import "github.com/google/gops/agent"
+      agent.Listen(agent.Options{})
+      
+  common_issues:
+    title: "Common Go Issues"
+    summary: "Frequently encountered Go problems"
+    details: |
+      1. Goroutine Leaks
+         Symptoms: Goroutine count keeps growing
+         Fix: Ensure goroutines exit when done
+         
+      2. Memory Leaks
+         Symptoms: HeapAlloc continuously increases
+         Fix: Check for references preventing GC
+         
+      3. High GC Pause
+         Symptoms: Long GC pause times
+         Fix: Reduce allocation rate, increase GOGC
+         
+      4. Thread Exhaustion
+         Symptoms: High GO_THREADS count
+         Fix: Limit blocking syscalls, use pools
+         
+      5. File Descriptor Leaks
+         Symptoms: "too many open files"
+         Fix: Ensure Close() is called

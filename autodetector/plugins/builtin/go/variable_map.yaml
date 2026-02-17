@@ -1,0 +1,137 @@
+schema:
+  os: go
+  description: "Go Programming Language Runtime"
+  version: "1.0.0"
+  category: programming_language
+  
+  variables:
+    # Go Version Info
+    GO_VERSION:
+      type: text
+      unit: version
+      source_command: go_version
+      description: "Installed Go version"
+      weight: 0.3
+      
+    GO_PROCESS_COUNT:
+      type: gauge
+      unit: count
+      source_command: process_list
+      description: "Number of running Go processes"
+      weight: 1.0
+      thresholds:
+        warning: 50
+        critical: 100
+        
+    # Runtime Metrics
+    GO_GOROUTINES:
+      type: gauge
+      unit: count
+      source_command: gops_stats
+      description: "Number of goroutines"
+      weight: 1.2
+      thresholds:
+        warning: 1000
+        critical: 5000
+        
+    GO_THREADS:
+      type: gauge
+      unit: count
+      source_command: gops_stats
+      description: "Number of OS threads"
+      weight: 1.0
+      thresholds:
+        warning: 100
+        critical: 500
+        
+    # Memory Metrics
+    GO_HEAP_ALLOC:
+      type: gauge
+      unit: bytes
+      source_command: gops_stats
+      description: "Heap memory allocated"
+      weight: 1.5
+      thresholds:
+        warning: 536870912  # 512MB
+        critical: 1073741824  # 1GB
+        
+    GO_HEAP_ALLOC_BYTES:
+      type: gauge
+      unit: bytes
+      source_command: expvar_metrics
+      description: "Heap allocation from expvar/pprof"
+      weight: 1.5
+      thresholds:
+        warning: 536870912
+        critical: 1073741824
+        
+    GO_HEAP_SYS_BYTES:
+      type: gauge
+      unit: bytes
+      source_command: expvar_metrics
+      description: "Total heap memory obtained from system"
+      weight: 1.0
+      
+    GO_HEAP_INUSE_BYTES:
+      type: gauge
+      unit: bytes
+      source_command: expvar_metrics
+      description: "Heap memory in use"
+      weight: 1.2
+      
+    GO_HEAP_INUSE_OBJECTS:
+      type: gauge
+      unit: count
+      source_command: pprof_heap
+      description: "Number of allocated heap objects"
+      weight: 1.0
+      
+    GO_HEAP_IDLE_BYTES:
+      type: gauge
+      unit: bytes
+      source_command: prometheus_metrics
+      description: "Idle heap memory"
+      weight: 0.8
+      
+    # Garbage Collection
+    GO_GC_CYCLES:
+      type: counter
+      unit: count
+      source_command: gops_stats
+      description: "Number of GC cycles completed"
+      weight: 0.5
+      
+    GO_GC_COUNT:
+      type: counter
+      unit: count
+      source_command: expvar_metrics
+      description: "Total GC cycles from runtime"
+      weight: 0.5
+      
+    GO_GC_PAUSE_NS:
+      type: gauge
+      unit: nanoseconds
+      source_command: expvar_metrics
+      description: "Last GC pause duration"
+      weight: 1.0
+      thresholds:
+        warning: 1000000  # 1ms
+        critical: 10000000  # 10ms
+        
+    GO_GC_DURATION_SECONDS:
+      type: gauge
+      unit: seconds
+      source_command: prometheus_metrics
+      description: "GC duration from Prometheus metrics"
+      weight: 1.0
+      thresholds:
+        warning: 0.1
+        critical: 0.5
+        
+    # Expvar Custom Metrics
+    GO_EXPVAR_CUSTOM:
+      type: gauge
+      unit: count
+      source_command: expvar_metrics
+      description: "Custom application metrics via expvar"
+      weight: 0.7

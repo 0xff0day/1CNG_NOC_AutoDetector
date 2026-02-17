@@ -35,3 +35,4 @@ def should_emit_alert(store: SqliteStore, alert: Dict[str, Any], cooldown_sec: i
         return True
 
     return False
+

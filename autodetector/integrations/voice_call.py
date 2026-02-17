@@ -10,7 +10,7 @@ def _env_or_value(v: Any) -> Any:
     if isinstance(v, str) and v.startswith("${") and v.endswith("}"):
         return os.environ.get(v[2:-1], "")
     return v
-
+    
 
 def _twiml_message(summary: str) -> str:
     safe = summary.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")

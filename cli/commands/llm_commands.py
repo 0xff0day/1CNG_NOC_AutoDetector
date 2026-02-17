@@ -17,14 +17,14 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from ..llm import (
-    LLMRegistry, 
-    ModelConfig, 
+from autodetector.ai.llm import (
+    LLMRegistry,
+    ModelConfig,
     ModelArchitecture,
-    NOCModelTrainer,
-    TrainingConfig,
-    NOCTrainingDataBuilder,
 )
+
+from autodetector.ai.llm.training import NOCModelTrainer, TrainingConfig
+from autodetector.ai.llm.noc_training_data import NOCTrainingDataBuilder
 
 
 def add_llm_subparser(subparsers):
@@ -57,7 +57,7 @@ def add_llm_subparser(subparsers):
     register_parser.add_argument("--name", required=True, help="Model name")
     register_parser.add_argument("--path", required=True, help="Path to model file")
     register_parser.add_argument("--architecture", required=True, 
-                                choices=["gpt", "claude", "gemini"],
+                                choices=["gpt", "claude", "gemini", "ollama"],
                                 help="Model architecture")
     register_parser.add_argument("--context-length", type=int, default=8192)
     register_parser.add_argument("--quantization", default="Q4_K_M")

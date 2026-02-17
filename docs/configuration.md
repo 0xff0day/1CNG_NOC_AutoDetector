@@ -52,6 +52,37 @@ system:
 
 ---
 
+## Local LLM Settings
+
+This system supports local LLM inference via multiple backends.
+
+### Ollama
+
+Ollama is the recommended backend for easy local inference (CPU/GPU) without managing model files directly in this project.
+
+**Environment Variables**
+
+```bash
+# Default: http://127.0.0.1:11434
+export OLLAMA_HOST="http://127.0.0.1:11434"
+```
+
+**Model Registration Notes**
+
+When using Ollama, `model_path` in the model registry is interpreted as the Ollama model name (for example: `llama3:8b`).
+
+Example registration and usage:
+
+```bash
+# Register an Ollama model (path is the ollama model name)
+python nocctl.py --config config/config.yaml llm register --name ollama-llama3 --path llama3:8b --architecture ollama
+
+# Generate text
+python nocctl.py --config config/config.yaml llm generate --model ollama-llama3 --prompt "Summarize this alert: CPU 95% on r1"
+```
+
+---
+
 ## Device Configuration
 
 ```yaml

@@ -325,6 +325,9 @@ See the `docs/` directory for detailed documentation:
 - XCP-ng/XenServer
 - +6 more
 
+### Programming Languages (1)
+- **Go** - Runtime monitoring (goroutines, GC, heap, gops, pprof)
+
 ---
 
 ## 🤖 AI Detection Capabilities

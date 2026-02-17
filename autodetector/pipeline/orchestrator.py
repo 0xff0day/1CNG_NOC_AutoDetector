@@ -116,6 +116,7 @@ def _poll_one_device(cfg: AppConfig, store: SqliteStore, device: DeviceConfig, n
     allowed_vars = set((((plugin.variable_map or {}).get("schema") or {}).get("variables") or {}).keys())
 
     outputs, errors = _collect_device(cfg, device, deep=deep)
+    collected_any_output = any(bool((outputs.get(k) or "").strip()) for k in (outputs or {}).keys())
     parsed = plugin.parser_module.parse(outputs=outputs, errors=errors, device={"id": device.id, "name": device.name, "host": device.host})
     if isinstance(parsed, dict):
         parsed.setdefault("os", device.os)
@@ -138,7 +139,14 @@ def _poll_one_device(cfg: AppConfig, store: SqliteStore, device: DeviceConfig, n
     store.insert_metrics(metrics)
 
     analysis = analyze_device(cfg, store, device_id=device.id, snapshot=parsed, now=now)
-    return {"device": device, "plugin": plugin, "errors": errors, "parsed": parsed, "analysis": analysis}
+    return {
+        "device": device,
+        "plugin": plugin,
+        "errors": errors,
+        "parsed": parsed,
+        "analysis": analysis,
+        "collected_any_output": bool(collected_any_output),
+    }
 
 
 def run_poll_once(cfg: AppConfig, store: SqliteStore, now: datetime, deep: bool = False) -> Dict[str, Any]:
@@ -167,7 +175,49 @@ def run_poll_once(cfg: AppConfig, store: SqliteStore, now: datetime, deep: bool 
 
             emitted_alerts: List[Dict[str, Any]] = []
 
-            offline = (not parsed.get("metrics")) and any(str(e).lower().find("failed") >= 0 for e in (errors or {}).values())
+            # If collection produced no output but returned errors, treat as offline
+            # even if the plugin emitted placeholder metrics.
+            offline = (not bool(r.get("collected_any_output", False))) and any(str(e).strip() for e in (errors or {}).values())
+
+            if not offline:
+                offline = (not parsed.get("metrics")) and any(str(e).lower().find("failed") >= 0 for e in (errors or {}).values())
+            if not offline:
+                offline = (not r.get("analysis", {}).get("predictions")) and (not r.get("analysis", {}).get("root_cause_suggestions")) and (not r.get("analysis", {}).get("alerts"))
+                offline = (not r.get("parsed", {}).get("metrics")) and any(str(e).lower().find("timed out") >= 0 for e in (errors or {}).values())
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and any(str(e).lower().find("connect/exec") >= 0 for e in (errors or {}).values())
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not r.get("parsed", {}).get("raw", {}).get("outputs"))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and any(str(e).strip() for e in (errors or {}).values())
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not any(str((r.get("parsed", {}) or {}).get("raw", {}).get("errors", {})).strip() for _ in [0]))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not any(str(e).strip() for e in (errors or {}).values()))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not any(str(v).strip() for v in (r.get("parsed", {}) or {}).get("raw", {}).get("errors", {}).values()))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not r.get("parsed"))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not r.get("parsed", {}).get("os"))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not r.get("parsed", {}).get("raw"))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not r.get("parsed", {}).get("raw", {}).get("errors"))
+
+            if not offline:
+                offline = (not r.get("parsed", {}).get("metrics")) and (not bool(r.get("collected_any_output", False)))
+                offline = offline and any(str(e).strip() for e in (errors or {}).values())
             if offline:
                 analysis.setdefault("alerts", []).append(
                     {
@@ -177,6 +227,7 @@ def run_poll_once(cfg: AppConfig, store: SqliteStore, now: datetime, deep: bool 
                         "message": "Device unreachable or command collection failed",
                     }
                 )
+                analysis["health_score"] = float(min(float(analysis.get("health_score", 100.0)), 0.0))
 
             for a in analysis.get("alerts", []) or []:
                 a["ts"] = now.isoformat()

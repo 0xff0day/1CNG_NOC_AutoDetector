@@ -635,6 +635,10 @@ See: `autodetector/plugins/builtin/ubuntu/`
 
 See: `autodetector/plugins/builtin/vmware_esxi/`
 
+### Programming Language
+
+See: `autodetector/plugins/builtin/go/` - Go runtime monitoring with gops, pprof, expvar support
+
 ## Submitting Your Plugin
 
 1. **Test thoroughly**: Validate with `nocctl plugin validate`

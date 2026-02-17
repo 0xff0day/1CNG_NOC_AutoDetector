@@ -1,0 +1,27 @@
+session:
+  mode: exec
+  description: "Go programming language runtime monitoring"
+
+commands:
+  normal:
+    # Go version and environment
+    go_version: "go version"
+    go_env: "go env"
+    
+    # Process monitoring (find running Go apps)
+    process_list: "ps aux | grep -E '(go |\.go$|/go/)' | grep -v grep"
+    
+    # If gops is available
+    gops_stats: "gops $(pgrep -f 'go run|go build' | head -1) 2>/dev/null || echo 'gops not available'"
+    
+    # Check for Go module info
+    go_mod_info: "find /opt /home /var/www -name 'go.mod' -exec head -5 {} \; 2>/dev/null | head -20"
+    
+  deep_audit:
+    # Detailed runtime metrics if accessible
+    pprof_heap: "curl -s http://localhost:6060/debug/pprof/heap?debug=1 2>/dev/null || echo 'pprof not accessible'"
+    expvar_metrics: "curl -s http://localhost:6060/debug/vars 2>/dev/null || echo 'expvar not accessible'"
+    prometheus_metrics: "curl -s http://localhost:8080/metrics 2>/dev/null || curl -s http://localhost:9090/metrics 2>/dev/null || echo 'prometheus endpoint not accessible'"
+    
+    # Memory stats from /proc if available
+    go_proc_mem: "for pid in $(pgrep -f 'go run|go build|main.go' 2>/dev/null | head -5); do cat /proc/$pid/status 2>/dev/null | grep -E '(VmRSS|VmSize|Threads)'; done"

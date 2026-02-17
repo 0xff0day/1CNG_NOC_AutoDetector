@@ -240,6 +240,43 @@ See [docs/plugins.md](docs/plugins.md) for development guide.
 
 ---
 
+## 🐹 Go Programming Language Support
+
+Monitor Go applications with comprehensive runtime metrics:
+
+```yaml
+devices:
+  - id: "go-app-1"
+    name: "Go Application Server"
+    host: "10.0.0.100"
+    transport: "ssh"
+    os: "go"
+    tags: ["golang", "microservice"]
+```
+
+### Go Metrics Collected
+
+| Metric | Source | Description |
+|--------|--------|-------------|
+| **GO_GOROUTINES** | gops/expvar | Number of active goroutines |
+| **GO_THREADS** | gops | OS thread count |
+| **GO_HEAP_ALLOC** | pprof/expvar | Heap bytes allocated |
+| **GO_GC_COUNT** | runtime | Total GC cycles |
+| **GO_GC_PAUSE_NS** | runtime | Last GC pause duration |
+| **GO_PROCESS_COUNT** | ps | Running Go processes |
+
+### Go Collection Methods
+
+1. **gops tool** - Google's process introspection
+2. **pprof endpoint** - `/debug/pprof/heap`
+3. **expvar endpoint** - `/debug/vars`
+4. **Prometheus metrics** - `/metrics`
+5. **Process inspection** - `/proc/PID/status`
+
+See `autodetector/plugins/builtin/go/` for full plugin details.
+
+---
+
 ## ⚙️ Configuration Example
 
 ```yaml

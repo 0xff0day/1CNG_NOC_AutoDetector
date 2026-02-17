@@ -43,7 +43,7 @@ nocctl scan [OPTIONS]
 nocctl scan --device r1
 
 # Scan by IP with OS hint
-nocctl scan --host 10.0.0.1 --os cisco_ios
+nocctl      
 
 # Scan all core network devices
 nocctl scan --tags core --output json
@@ -53,6 +53,44 @@ nocctl scan --host 192.168.1.1 --os mikrotik --once
 ```
 
 ---
+
+## Local LLM Commands
+
+The CLI supports managing and using local LLMs via:
+- llama.cpp (`gpt`)
+- transformers (`claude`, `gemini`)
+- Ollama (`ollama`)
+
+### llm list
+
+```bash
+python nocctl.py --config config/config.yaml llm list
+python nocctl.py --config config/config.yaml llm list --loaded
+```
+
+### llm register
+
+```bash
+# Register a local model backend
+python nocctl.py --config config/config.yaml llm register --name my-gpt --path /path/to/model.gguf --architecture gpt
+
+# Register an Ollama model (path is the ollama model name)
+python nocctl.py --config config/config.yaml llm register --name ollama-llama3 --path llama3:8b --architecture ollama
+```
+
+### llm load / unload
+
+```bash
+python nocctl.py --config config/config.yaml llm load ollama-llama3
+python nocctl.py --config config/config.yaml llm unload ollama-llama3
+```
+
+### llm generate
+
+```bash
+python nocctl.py --config config/config.yaml llm generate --model ollama-llama3 --prompt "Analyze: BGP flapping detected"
+python nocctl.py --config config/config.yaml llm generate --model ollama-llama3 --prompt "Explain this alert" --stream
+```
 
 ### workflow
 Manage and execute the NOC workflow pipeline.

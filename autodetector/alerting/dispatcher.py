@@ -53,6 +53,29 @@ def dispatch_alerts(
 
         msg = f"[{a.get('severity')}] {a.get('device_id')} {a.get('variable')} {a.get('alert_type')}\n{a.get('message')}"
 
+        raw_cfg = cfg.raw if hasattr(cfg, "raw") else cfg
+        assistant_cfg = ((raw_cfg.get("integrations") or {}).get("assistant") or {})
+        if bool(assistant_cfg.get("enabled", False)) and bool(assistant_cfg.get("append_ai_summary", False)):
+            model_name = str(assistant_cfg.get("model", "") or "").strip()
+            if model_name:
+                try:
+                    from autodetector.assistant.llm_assistant import AssistantConfig, generate_assistant_response
+
+                    acfg = AssistantConfig(model_name=model_name, max_tokens=200, temperature=0.2)
+                    resp = generate_assistant_response(
+                        acfg,
+                        instruction=(
+                            "Summarize this alert and give the top 3 troubleshooting steps. "
+                            "Keep it short and actionable."
+                        ),
+                        input_data={"device": device, "alert": a},
+                    )
+                    ai_txt = (resp.text or "").strip()
+                    if ai_txt:
+                        msg = msg + "\n\nAI Summary:\n" + ai_txt
+                except Exception:
+                    pass
+
         if "telegram" in rt.channels:
             chat_id = grp.get("telegram_chat_id")
             bot_token = ((cfg.raw.get("integrations") or {}).get("telegram") or {}).get("bot_token")
